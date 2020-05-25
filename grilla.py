@@ -9,14 +9,15 @@ class Grilla:
         self.generacion = 0
 
     def avanzar(self):
+        def contar_vecinos(vecino):
+            return 1 if self.celdas[vecino[1]][vecino[0]].estado == Celula.VIVO else 0
+
         for x in range(self.ancho):
             for y in range(self.alto):
                 celula = self.celdas[y][x]
-                vecinos_vivos = 0
-                for vecino in self.vecinos(x, y):
-                    if self.celdas[vecino[1]][vecino[0]].estado == Celula.VIVO:
-                        vecinos_vivos += 1
+                vecinos_vivos = sum(map(contar_vecinos, self.vecinos(x, y)))
                 celula.avanzar(vecinos_vivos)
+
         self.generacion += 1
 
     def dibujar(self):
