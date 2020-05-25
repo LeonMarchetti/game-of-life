@@ -8,10 +8,7 @@ class Celula:
     VIVO = 1
 
     def __init__(self, estado_inicial=None):
-        if estado_inicial:
-            self.estado = estado_inicial
-        else:
-            self.estado = getrandbits(1)
+        self.estado = estado_inicial or getrandbits(1)
         self.generacion = 0
 
     def avanzar(self, vecinos_vivos):
