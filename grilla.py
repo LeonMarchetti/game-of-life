@@ -10,7 +10,9 @@ class Grilla:
 
     def avanzar(self):
         def contar_vecinos(vecino):
-            return 1 if self.celdas[vecino[1]][vecino[0]].estado == Celula.VIVO else 0
+            return 1 if (estado_anterior[vecino[1]][vecino[0]] == Celula.VIVO) else 0
+
+        estado_anterior = [[celula.estado for celula in fila] for fila in self.celdas]
 
         for x in range(self.ancho):
             for y in range(self.alto):
