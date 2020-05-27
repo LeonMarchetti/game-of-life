@@ -25,8 +25,8 @@ class Grilla:
     def dibujar(self):
         salida = f"Generacion: {self.generacion}\n╭{'─' * self.ancho}╮\n"
 
-        for columna in self.celdas:
-            salida = f"{salida}│{''.join([celula.dibujar() for celula in columna])}│\n"
+        for fila in self.celdas:
+            salida = f"{salida}│{''.join([celula.dibujar() for celula in fila])}│\n"
 
         return f"{salida}╰{'─' * self.ancho}╯\n"
 
