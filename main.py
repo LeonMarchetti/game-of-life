@@ -6,7 +6,7 @@ from grilla import Grilla
 def main():
     grilla = Grilla(8, 5)
     while True:
-        grilla.dibujar()
+        print(grilla.dibujar())
         if grilla.esta_terminado():
             break
         sleep(1)

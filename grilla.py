@@ -23,16 +23,12 @@ class Grilla:
         self.generacion += 1
 
     def dibujar(self):
-        print(f"Generacion: {self.generacion}")
-        print("╭" + "─" * self.ancho + "╮")
+        salida = f"Generacion: {self.generacion}\n╭{'─' * self.ancho}╮\n"
 
         for columna in self.celdas:
-            print("│", end="")
-            for celula in columna:
-                print(celula.dibujar(), end="")
-            print("│")
+            salida = f"{salida}│{''.join([celula.dibujar() for celula in columna])}│\n"
 
-        print("╰" + "─" * self.ancho + "╯")
+        return f"{salida}╰{'─' * self.ancho}╯\n"
 
     def esta_terminado(self):
         for fila in self.celdas:
