@@ -4,7 +4,11 @@ from grilla import Grilla
 
 
 def main():
-    grilla = Grilla(8, 5)
+    # estado_inicial = [[1, 0, 1], [0, 1, 0]]
+    # grilla = Grilla.desdeEstadoInicial(estado_inicial)
+
+    grilla = Grilla.desdeAnchoAlto(8, 5)
+
     while True:
         print(grilla.dibujar())
         if grilla.esta_terminado():

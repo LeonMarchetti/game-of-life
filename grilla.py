@@ -2,11 +2,21 @@ from celula import Celula
 
 
 class Grilla:
-    def __init__(self, ancho, alto):
+    def __init__(self, estado_inicial, ancho ,alto):
+        self.celdas = estado_inicial
         self.ancho = ancho
         self.alto = alto
-        self.celdas = [[Celula() for _ in range(self.ancho)] for _ in range(self.alto)]
         self.generacion = 0
+
+    @classmethod
+    def desdeAnchoAlto(clase, ancho, alto):
+        return clase([[Celula() for _ in range(ancho)] for _ in range(alto)], ancho, alto)
+
+    @classmethod
+    def desdeEstadoInicial(clase, estado_inicial):
+        ancho = len(estado_inicial[0])
+        alto = len(estado_inicial)
+        return clase([[Celula(estado_inicial[y][x]) for x in range(ancho)] for y in range(alto)], ancho, alto)
 
     def avanzar(self):
         def contar_vecinos(vecino):
