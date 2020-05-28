@@ -1,54 +1,45 @@
 class CelulaEstado:
-    @staticmethod
-    def avanzar(vecinos_vivos):
+    def avanzar(self, vecinos_vivos):
         pass
 
-    @staticmethod
-    def dibujar():
+    def dibujar(self):
         pass
 
-    @staticmethod
-    def conteo_vecino():
+    def conteo(self):
         pass
+
 
 class CelulaEstadoVivo(CelulaEstado):
-    @staticmethod
-    def avanzar(vecinos_vivos):
-        if 2 > vecinos_vivos > 3:
-            return CelulaEstadoMuerto
-        return CelulaEstadoVivo
+    def avanzar(self, vecinos_vivos):
+        if (vecinos_vivos < 2 or vecinos_vivos > 3):
+            return CelulaEstadoMuerto()
+        return self
 
-    @staticmethod
-    def dibujar():
+    def dibujar(self):
         return "█"
 
-    @staticmethod
-    def conteo_vecino():
+    def conteo(self):
         return 1
 
 
 class CelulaEstadoMuerto(CelulaEstado):
-    @staticmethod
-    def avanzar(vecinos_vivos):
-        if vecinos_vivos == 3:
-            return CelulaEstadoVivo
-        return CelulaEstadoMuerto
+    def avanzar(self, vecinos_vivos):
+        if (vecinos_vivos == 3):
+            return CelulaEstadoVivo()
+        return self
 
-    @staticmethod
-    def dibujar():
+    def dibujar(self):
         return "."
 
-    @staticmethod
-    def conteo_vecino():
+    def conteo(self):
         return 0
 
 
 class CelulaEstadoFactory(object):
     @staticmethod
     def obtener(estado):
-        if estado == 0:
-            return CelulaEstadoMuerto
-        elif estado == 1:
-            return CelulaEstadoVivo
-        else:
-            return CelulaEstado
+        if (estado == 0):
+            return CelulaEstadoMuerto()
+        elif (estado == 1):
+            return CelulaEstadoVivo()
+        return None
