@@ -1,8 +1,8 @@
-from celula import Celula
+from celula import CelulaFactory, CelulaViva
 
 
 class Grilla:
-    def __init__(self, estado_inicial, ancho ,alto):
+    def __init__(self, estado_inicial, ancho, alto):
         self.celdas = estado_inicial
         self.ancho = ancho
         self.alto = alto
@@ -10,25 +10,41 @@ class Grilla:
 
     @classmethod
     def desdeAnchoAlto(clase, ancho, alto):
-        return clase([[Celula() for _ in range(ancho)] for _ in range(alto)], ancho, alto)
+        return clase([
+            [
+                CelulaFactory.obtener()
+                for _ in range(ancho)
+            ]
+            for _ in range(alto)
+        ], ancho, alto)
 
     @classmethod
     def desdeEstadoInicial(clase, estado_inicial):
         ancho = len(estado_inicial[0])
         alto = len(estado_inicial)
-        return clase([[Celula(estado_inicial[y][x]) for x in range(ancho)] for y in range(alto)], ancho, alto)
+
+        return clase([
+            [
+                CelulaFactory.obtener(estado_inicial[y][x])
+                for x in range(ancho)
+            ]
+            for y in range(alto)
+        ], ancho, alto)
 
     def avanzar(self):
         def contar_vecinos(vecino):
-            return 1 if (estado_anterior[vecino[1]][vecino[0]] == Celula.VIVO) else 0
+            return estado_anterior[vecino[1]][vecino[0]].conteo()
 
-        estado_anterior = [[celula.estado for celula in fila] for fila in self.celdas]
+        estado_anterior = [
+            [celula for celula in fila]
+            for fila in self.celdas
+        ]
 
         for x in range(self.ancho):
             for y in range(self.alto):
                 celula = self.celdas[y][x]
                 vecinos_vivos = sum(map(contar_vecinos, self.vecinos(x, y)))
-                celula.avanzar(vecinos_vivos)
+                self.celdas[y][x] = celula.avanzar(vecinos_vivos)
 
         self.generacion += 1
 
@@ -40,12 +56,8 @@ class Grilla:
 
         return f"{salida}╰{'─' * self.ancho}╯\n"
 
-    def esta_terminado(self):
-        for fila in self.celdas:
-            for celula in fila:
-                if celula.estado == Celula.VIVO:
-                    return False
-        return True
+    def esta_vacio(self):
+        return not any([any([type(celula) == CelulaViva for celula in fila]) for fila in self.celdas])
 
     def vecinos(self, x, y):
         for diff_x in (-1, 0, 1):

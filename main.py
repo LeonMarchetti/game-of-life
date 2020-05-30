@@ -4,11 +4,11 @@ from grilla import Grilla
 
 
 def main():
-    if 0:
+    if 1:
         grilla = Grilla.desdeAnchoAlto(8, 5)
     else:
         estado_inicial = [
-            [0, 0, 1, 0, 0],
+            [0, 0, 0, 0, 0],
             [0, 0, 1, 0, 0],
             [0, 0, 1, 0, 0]
         ]
@@ -16,7 +16,7 @@ def main():
 
     while True:
         print(grilla.dibujar())
-        if grilla.esta_terminado():
+        if grilla.esta_vacio():
             break
         sleep(1)
         grilla.avanzar()

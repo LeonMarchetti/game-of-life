@@ -4,32 +4,59 @@ from colores import Colores
 
 
 class Celula:
-    MUERTO = 0
-    VIVO = 1
+    def avanzar(self, vecinos_vivos):
+        pass
 
-    def __init__(self, estado_inicial=None):
-        self.estado = estado_inicial if (estado_inicial is not None) else getrandbits(1)
+    def dibujar(self):
+        pass
+
+
+class CelulaViva(Celula):
+    def __init__(self):
         self.generacion = 0
 
     def avanzar(self, vecinos_vivos):
-        if self.estado == Celula.MUERTO:
-            if vecinos_vivos == 3:
-                self.estado = Celula.VIVO
-                self.generacion = 0
-        elif self.estado == Celula.VIVO:
-            if 2 <= vecinos_vivos <= 3:
-                self.generacion += 1
-            else:
-                self.estado = Celula.MUERTO
+        if (2 <= vecinos_vivos <= 3):
+            self.generacion += 1
+            return self
+        else:
+            return CelulaMuerta()
+
+    def conteo(self):
+        return 1
 
     def dibujar(self):
-        if self.estado == Celula.MUERTO:
-            return "."
-        elif self.estado == Celula.VIVO:
-            if self.generacion == 0:
-                color = Colores.VERDE
-            elif self.generacion == 1:
-                color = Colores.AMARILLO
-            elif self.generacion > 1:
-                color = Colores.ROJO
-            return f"{color}█{Colores.FIN}"
+        if (self.generacion == 0):
+            color = Colores.VERDE
+        elif (self.generacion == 1):
+            color = Colores.AMARILLO
+        elif (self.generacion > 1):
+            color = Colores.ROJO
+        return f"{color}█{Colores.FIN}"
+
+
+class CelulaMuerta(Celula):
+    def avanzar(self, vecinos_vivos):
+        if (vecinos_vivos == 3):
+            return CelulaViva()
+        return self
+
+    def conteo(self):
+        return 0
+
+    def dibujar(self):
+        return "."
+
+
+class CelulaFactory:
+    @staticmethod
+    def obtener(estado_inicial=None):
+        estado = estado_inicial if (
+            estado_inicial is not None) else getrandbits(1)
+
+        if (estado == 0):
+            return CelulaMuerta()
+        elif (estado == 1):
+            return CelulaViva()
+        else:
+            raise ValueError("Valor inválido para estado de célula.")
