@@ -4,10 +4,15 @@ from grilla import Grilla
 
 
 def main():
-    # estado_inicial = [[1, 0, 1], [0, 1, 0]]
-    # grilla = Grilla.desdeEstadoInicial(estado_inicial)
-
-    grilla = Grilla.desdeAnchoAlto(8, 5)
+    if 0:
+        grilla = Grilla.desdeAnchoAlto(8, 5)
+    else:
+        estado_inicial = [
+            [0, 0, 1, 0, 0],
+            [0, 0, 1, 0, 0],
+            [0, 0, 1, 0, 0]
+        ]
+        grilla = Grilla.desdeEstadoInicial(estado_inicial)
 
     while True:
         print(grilla.dibujar())
